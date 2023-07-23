@@ -1,60 +1,73 @@
 /*******************************************************************************
-Write a function `sentenceMapper` that accepts a sentence and a callback as arguments.
-The function should return a new sentence where every word of the original sentence
-becomes the result of passing the word to the callback.
+Write a function `mySimpleReduce` that accepts an array and a callback as arguments.
+The function should mimic the behavior of the built in Array#reduce, utilizing the
+first element of the array as the default accumulator.
+
+In other words, the function should begin with the first element of the array as
+the accumulator and call the callback for each of the remaining elements in the array,
+passing in the current accumulator and current element into the callback. Upon calling the callback,
+the accumulator should be set to the result of the callback.
 
 Examples:
 
-let result1 = sentenceMapper("what is the answer?", function(word) {
-    return word.toUpperCase() + "!";
+let result1 = mySimpleReduce([5, 3, 2, 4], function(sum, el) {
+    return sum + el;
 });
-console.log(result1); // 'WHAT! IS! THE! ANSWER?!'
+console.log(result1); // 14
 
-let removeVowels = function(word) {
-    let newWord = "";
-    for (let i = 0; i < word.length; i++) {
-        let char = word[i];
-        if (!"aeiou".includes(char)) {
-            newWord += char;
-        }
+let result2 = mySimpleReduce([4, 6, 2], function(product, el) {
+    return product * el;
+});
+console.log(result2); // 48
+
+let result3 = mySimpleReduce([4, 6, 2, 8, 3], function(max, el) {
+    if (el > max) {
+        return el;
+    } else {
+        return max;
     }
-    return newWord;
-};
+});
+console.log(result3); // 8
 
-let result2 = sentenceMapper("this is pretty cool right", removeVowels);
-console.log(result2); // 'ths s prtty cl rght'
+AFTER YOU ARE FINISHED WITH THIS PROBLEM, ASK FOR A CODE REVIEW
+- Explain, but don't code, how you would refactor this problem to take in an
+  optional initial accumulator
 *******************************************************************************/
-/*
-Write a function `sentenceMapper` that accepts a sentence and a callback as arguments.
-The function should return a new sentence where every word of the original sentence
-becomes the result of passing the word to the callback.
+/* Write a function `mySimpleReduce` that accepts an array and a callback as arguments.
+The function should mimic the behavior of the built in Array#reduce, utilizing the
+first element of the array as the default accumulator.
+
+In other words, the function should begin with the first element of the array as
+the accumulator and call the callback for each of the remaining elements in the array,
+passing in the current accumulator and current element into the callback.
+Upon calling the callback,
+the accumulator should be set to the result of the callback.
 */
 
-let sentenceMapper = function(string, cb) {
-    let arr = string.split(' ');
-    for (let i = 0; i < arr.length; i++) {
-        arr[i] = cb(arr[i]);
+let mySimpleReduce = function(array, cb) {
+    let accumulator = array[0];
+    for (let i = 1; i < array.length; i++) {
+        accumulator = cb(accumulator, array[i]);
     }
-    return arr.join(' ');
+    return accumulator;
 };
 
 
-
-let result1 = sentenceMapper("what is the answer?", function(word) {
-    return word.toUpperCase() + "!";
+let result1 = mySimpleReduce([5, 3, 2, 4], function(sum, el) {
+    return sum + el;
 });
-console.log(result1); // 'WHAT! IS! THE! ANSWER?!'
+console.log(result1); // 14
 
-let removeVowels = function(word) {
-    let newWord = "";
-    for (let i = 0; i < word.length; i++) {
-        let char = word[i];
-        if (!"aeiou".includes(char)) {
-            newWord += char;
-        }
+let result2 = mySimpleReduce([4, 6, 2], function(product, el) {
+    return product * el;
+});
+console.log(result2); // 48
+
+let result3 = mySimpleReduce([4, 6, 2, 8, 3], function(max, el) {
+    if (el > max) {
+        return el;
+    } else {
+        return max;
     }
-    return newWord;
-};
-
-let result2 = sentenceMapper("this is pretty cool right", removeVowels);
-console.log(result2); // 'ths s prtty cl rght'
+});
+console.log(result3); // 8
