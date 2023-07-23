@@ -1,48 +1,60 @@
 /*******************************************************************************
-Write a function `myEvery` that accepts an array and a callback as arguments.
-The function should return a boolean indicating whether or not all elements of
-the array return true when passed into the callback.
-
-Do not use the built in Array#every.
+Write a function `sentenceMapper` that accepts a sentence and a callback as arguments.
+The function should return a new sentence where every word of the original sentence
+becomes the result of passing the word to the callback.
 
 Examples:
 
-let isEven = function (num) {
-    return num % 2 === 0;
-};
+let result1 = sentenceMapper("what is the answer?", function(word) {
+    return word.toUpperCase() + "!";
+});
+console.log(result1); // 'WHAT! IS! THE! ANSWER?!'
 
-let hasO = function(string) {
-    return string.includes('o');
-};
-
-console.log(myEvery([4, 8, 6, 10], isEven));            // true
-console.log(myEvery([4, 7, 6, 10], isEven));            // false
-console.log(myEvery(['book', 'door'], hasO));           // true
-console.log(myEvery(['book', 'door', 'pen'], hasO));    // false
-*******************************************************************************/
-
-let myEvery = function(array, cb) {
-    for (let i = 0; i < array.length; i++) {
-        if (!(cb(array[i]))) {
-            return false;
+let removeVowels = function(word) {
+    let newWord = "";
+    for (let i = 0; i < word.length; i++) {
+        let char = word[i];
+        if (!"aeiou".includes(char)) {
+            newWord += char;
         }
     }
-    return true;
+    return newWord;
+};
+
+let result2 = sentenceMapper("this is pretty cool right", removeVowels);
+console.log(result2); // 'ths s prtty cl rght'
+*******************************************************************************/
+/*
+Write a function `sentenceMapper` that accepts a sentence and a callback as arguments.
+The function should return a new sentence where every word of the original sentence
+becomes the result of passing the word to the callback.
+*/
+
+let sentenceMapper = function(string, cb) {
+    let arr = string.split(' ');
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = cb(arr[i]);
+    }
+    return arr.join(' ');
 };
 
 
 
+let result1 = sentenceMapper("what is the answer?", function(word) {
+    return word.toUpperCase() + "!";
+});
+console.log(result1); // 'WHAT! IS! THE! ANSWER?!'
 
-
-let isEven = function (num) {
-    return num % 2 === 0;
+let removeVowels = function(word) {
+    let newWord = "";
+    for (let i = 0; i < word.length; i++) {
+        let char = word[i];
+        if (!"aeiou".includes(char)) {
+            newWord += char;
+        }
+    }
+    return newWord;
 };
 
-let hasO = function(string) {
-    return string.includes('o');
-};
-
-console.log(myEvery([4, 8, 6, 10], isEven));            // true
-console.log(myEvery([4, 7, 6, 10], isEven));            // false
-console.log(myEvery(['book', 'door'], hasO));           // true
-console.log(myEvery(['book', 'door', 'pen'], hasO));    // false
+let result2 = sentenceMapper("this is pretty cool right", removeVowels);
+console.log(result2); // 'ths s prtty cl rght'
