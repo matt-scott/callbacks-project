@@ -1,26 +1,48 @@
 /*******************************************************************************
-Write a function `reject` that accepts an array and callback as arguments. The
-function should call the callback for each element of the array, passing in the
-element. The function should return a new array
-containing elements of the original array that result in false when given to the
-callback.
+Write a function `myEvery` that accepts an array and a callback as arguments.
+The function should return a boolean indicating whether or not all elements of
+the array return true when passed into the callback.
 
-Note that that you cannot use the Array `map` or `filter` methods to solve this
-problem.
+Do not use the built in Array#every.
 
 Examples:
 
-let isEven = function(n) {
-    return n % 2 === 0;
+let isEven = function (num) {
+    return num % 2 === 0;
 };
-console.log(reject([7, 8, 5, 6, 12, 11], isEven)); // [ 7, 5, 11 ]
 
-let hasA = function(s) {
-    return s.toLowerCase().includes('a');
+let hasO = function(string) {
+    return string.includes('o');
 };
-console.log(reject(['breadth', 'GRAPH', 'depth', 'height'], hasA)); // [ 'depth', 'height' ]
+
+console.log(myEvery([4, 8, 6, 10], isEven));            // true
+console.log(myEvery([4, 7, 6, 10], isEven));            // false
+console.log(myEvery(['book', 'door'], hasO));           // true
+console.log(myEvery(['book', 'door', 'pen'], hasO));    // false
 *******************************************************************************/
 
-let reject = function() {
-
+let myEvery = function(array, cb) {
+    for (let i = 0; i < array.length; i++) {
+        if (!(cb(array[i]))) {
+            return false;
+        }
+    }
+    return true;
 };
+
+
+
+
+
+let isEven = function (num) {
+    return num % 2 === 0;
+};
+
+let hasO = function(string) {
+    return string.includes('o');
+};
+
+console.log(myEvery([4, 8, 6, 10], isEven));            // true
+console.log(myEvery([4, 7, 6, 10], isEven));            // false
+console.log(myEvery(['book', 'door'], hasO));           // true
+console.log(myEvery(['book', 'door', 'pen'], hasO));    // false
